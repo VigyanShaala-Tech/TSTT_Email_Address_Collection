@@ -87,7 +87,7 @@ if st.button(combined_button_text):
 
 
     # Create the connection string
-    engine_str = f"mysql+mysqlconnector://{db_username}:{db_password}@{db_endpoint}:{db_port}/{db_name}"
+    engine_str = f"mysql+mysqlconnector://{username}:{password}@{host}:{port}/{database_name}"
 
     # Create the SQLAlchemy engine
     engine = create_engine(engine_str)
