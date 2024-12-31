@@ -63,6 +63,31 @@ if st.button(combined_button_text):
     if Email_id and Confirm_Email_id:  # Ensure both fields are filled
         if Email_id == Confirm_Email_id:  # Check if both email addresses match
             if "@gmail.com" in Email_id:  # Check if the email contains '@gmail.com'
+                feedback_df=create_feedback_dataframe(Name,College,Email_id,Confirm_Email_id)
+                # AWS RDS database connection info
+                db_username = 'vigyan'
+                db_password = '321#Dev'
+                db_name = 'vigyan'
+                db_port = '3306'
+                db_endpoint = '35.154.220.255'
+
+
+                # Create the connection string
+                engine_str = f"mysql+mysqlconnector://{db_username}:{db_password}@{db_endpoint}:{db_port}/{db_name}"
+
+                # Create the SQLAlchemy engine
+                engine = create_engine(engine_str)
+    
+
+
+                # Store the DataFrame in the database table
+                table_name = 'tstt_email_collection'  # Replace with your table name
+                data_to_insert = feedback_df.values.tolist()
+                data_to_insert = pd.DataFrame(data_to_insert,columns=feedback_df.columns)
+                data_to_insert.to_sql(name=table_name, con=engine, if_exists='append', index=False)
+
+
+
                 st.success("Thank you for your response.")
             else:
                 st.error("The email address must contain '@gmail.com'.")
@@ -71,37 +96,5 @@ if st.button(combined_button_text):
     else:
         st.error("Please fill in both fields.")
 
-
-    # AWS RDS database connection info
-    #username = st.secrets['DB_USERNAME']
-    #password = st.secrets['DB_PASSWORD']
-    #host = st.secrets['DB_ENDPOINT']
-    #port = st.secrets['DB_PORT']  # Replace with your MySQL port if different
-    #database_name = st.secrets['DB_NAME']
     
-    db_username = 'vigyan'
-    db_password = '321#Dev'
-    db_name = 'vigyan'
-    db_port = '3306'
-    db_endpoint = '35.154.220.255'
-
-
-    # Create the connection string
-    engine_str = f"mysql+mysqlconnector://{db_username}:{db_password}@{db_endpoint}:{db_port}/{db_name}"
-
-    # Create the SQLAlchemy engine
-    engine = create_engine(engine_str)
     
-    # Create the connection string for the AWS RDS MySQL database using the create_engine function
-    #connection_string = f"mysql+mysqlconnector://{username}:{password}@{host}:{port}/{database_name}"
-    #engine = create_engine(connection_string)
-    
-
-
-    # Store the DataFrame in the database table
-    table_name = 'tstt_email_collection'  # Replace with your table name
-    data_to_insert = feedback_df.values.tolist()
-    data_to_insert = pd.DataFrame(data_to_insert,columns=feedback_df.columns)
-    data_to_insert.to_sql(name=table_name, con=engine, if_exists='append', index=False)
-
-
