@@ -73,22 +73,28 @@ if st.button(combined_button_text):
 
 
     # AWS RDS database connection info
-    username = st.secrets['DB_USERNAME']
-    password = st.secrets['DB_PASSWORD']
-    host = st.secrets['DB_ENDPOINT']
-    port = st.secrets['DB_PORT']  # Replace with your MySQL port if different
-    database_name = st.secrets['DB_NAME']
+    #username = st.secrets['DB_USERNAME']
+    #password = st.secrets['DB_PASSWORD']
+    #host = st.secrets['DB_ENDPOINT']
+    #port = st.secrets['DB_PORT']  # Replace with your MySQL port if different
+    #database_name = st.secrets['DB_NAME']
     
-    #db_username = 'vigyan'
-    #db_password = '321#Dev'
-    #db_name = 'vigyan'
-    #db_port = '3306'
-    #db_endpoint = '35.154.220.255'
+    db_username = 'vigyan'
+    db_password = '321#Dev'
+    db_name = 'vigyan'
+    db_port = '3306'
+    db_endpoint = '35.154.220.255'
 
 
+    # Create the connection string
+    engine_str = f"mysql+mysqlconnector://{db_username}:{db_password}@{db_endpoint}:{db_port}/{db_name}"
+
+    # Create the SQLAlchemy engine
+    engine = create_engine(engine_str)
+    
     # Create the connection string for the AWS RDS MySQL database using the create_engine function
-    connection_string = f"mysql+mysqlconnector://{username}:{password}@{host}:{port}/{database_name}"
-    engine = create_engine(connection_string)
+    #connection_string = f"mysql+mysqlconnector://{username}:{password}@{host}:{port}/{database_name}"
+    #engine = create_engine(connection_string)
     
 
 
