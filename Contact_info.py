@@ -86,11 +86,9 @@ if st.button(combined_button_text):
     #db_endpoint = '35.154.220.255'
 
 
-    # Create the connection string
-    engine_str = f"mysql+mysqlconnector://{username}:{password}@{host}:{port}/{database_name}"
-
-    # Create the SQLAlchemy engine
-    engine = create_engine(engine_str)
+    # Create the connection string for the AWS RDS MySQL database using the create_engine function
+    connection_string = f"mysql+mysqlconnector://{username}:{password}@{host}:{port}/{database_name}"
+    engine = create_engine(connection_string)
     
 
 
