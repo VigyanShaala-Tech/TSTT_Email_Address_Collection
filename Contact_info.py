@@ -71,13 +71,19 @@ if st.button(combined_button_text):
     else:
         st.error("Please fill in both fields.")
 
-    
+
     # AWS RDS database connection info
-    db_username = 'vigyan'
-    db_password = '321#Dev'
-    db_name = 'vigyan'
-    db_port = '3306'
-    db_endpoint = '35.154.220.255'
+    username = st.secrets['DB_USERNAME']
+    password = st.secrets['DB_PASSWORD']
+    host = st.secrets['DB_ENDPOINT']
+    port = st.secrets['DB_PORT']  # Replace with your MySQL port if different
+    database_name = st.secrets['DB_NAME']
+    
+    #db_username = 'vigyan'
+    #db_password = '321#Dev'
+    #db_name = 'vigyan'
+    #db_port = '3306'
+    #db_endpoint = '35.154.220.255'
 
 
     # Create the connection string
