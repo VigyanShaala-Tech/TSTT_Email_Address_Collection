@@ -56,7 +56,6 @@ def create_feedback_dataframe(Name, College, Email_id, Confirm_Email_id):
     
 
 
-
 # Button to submit feedback
 if st.button("Submit"):
     if Email_id and Confirm_Email_id:  # Ensure both fields are filled
@@ -66,7 +65,7 @@ if st.button("Submit"):
                 feedback_df = create_feedback_dataframe(Name, College, Email_id, Confirm_Email_id)
 
                 # Fetch service account credentials from Supabase or other storage
-                supabase_credentials_url = "https://twetkfnfqdtsozephdse.supabase.co/storage/v1/object/sign/stemcheck/studied-indexer-431906-h1-e3634918ab42.json?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJzdGVtY2hlY2svc3R1ZGllZC1pbmRleGVyLTQzMTkwNi1oMS1lMzYzNDkxOGFiNDIuanNvbiIsImlhdCI6MTcyNjkwMzEzNywiZXhwIjoxNzU4NDM5MTM3fQ.d-YWFIIV3ue7eUwUIemVHKrxVSgsdy3Dm34bCfkKBPE&t=2024-09-21T07%3A18%3A57.318Z"  # Update this URL
+                supabase_credentials_url = st.secrets['SUPABASE_CREDENTIALS'] 
                 response = requests.get(supabase_credentials_url)
 
                 if response.status_code == 200:
@@ -82,7 +81,7 @@ if st.button("Submit"):
                         client = gspread.authorize(creds)
 
                         # Open the Google Sheet
-                        sheet_key = "1OfUcnLLjC3deCLvhWUYBV5jP0t4INaQ9_ToZFrRj468"  # Replace with your actual sheet key
+                        sheet_key = st.secrets['SH_Contact_info'] 
                         sheet = client.open_by_key(sheet_key).sheet1
 
                         # Get existing records from the sheet
