@@ -1,1 +1,0 @@
-streamlit run Contact_info.py
