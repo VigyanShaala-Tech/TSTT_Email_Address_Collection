@@ -43,58 +43,74 @@ if not Name or not College:
     st.stop()
 
 
-def create_feedback_dataframe(Name,College,Email_id,Confirm_Email_id):
+#Creates a feedback DataFrame.
+def create_feedback_dataframe(Name, College, Email_id, Confirm_Email_id):
     data = {
         'Name': Name,
-        'College':College,
-        'Email_id':Email_id,
-        "Confirm_Email_id":Confirm_Email_id
+        'College': College,
+        'Email_id': Email_id,
+        "Confirm_Email_id": Confirm_Email_id
     }
-
     feedback_df = pd.DataFrame([data])
     return feedback_df
     
-feedback_df=create_feedback_dataframe(Name,College,Email_id,Confirm_Email_id)
 
 
-# Create a button in Streamlit
-combined_button_text = "Submit"
-if st.button(combined_button_text):
+
+# Button to submit feedback
+if st.button("Submit"):
     if Email_id and Confirm_Email_id:  # Ensure both fields are filled
-        if Email_id == Confirm_Email_id:  # Check if both email addresses match
-            if "@gmail.com" in Email_id:  # Check if the email contains '@gmail.com'
-                feedback_df=create_feedback_dataframe(Name,College,Email_id,Confirm_Email_id)
-                # AWS RDS database connection info
-                db_username = 'vigyan'
-                db_password = '321#Dev'
-                db_name = 'vigyan'
-                db_port = '3306'
-                db_endpoint = '35.154.220.255'
+        if Email_id == Confirm_Email_id:  # Check if email addresses match
+            if "@gmail.com" in Email_id:  # Check for '@gmail.com'
+                # Create feedback DataFrame
+                feedback_df = create_feedback_dataframe(Name, College, Email_id, Confirm_Email_id)
 
+                # Fetch service account credentials from Supabase or other storage
+                supabase_credentials_url = "https://twetkfnfqdtsozephdse.supabase.co/storage/v1/object/sign/stemcheck/studied-indexer-431906-h1-e3634918ab42.json?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJzdGVtY2hlY2svc3R1ZGllZC1pbmRleGVyLTQzMTkwNi1oMS1lMzYzNDkxOGFiNDIuanNvbiIsImlhdCI6MTcyNjkwMzEzNywiZXhwIjoxNzU4NDM5MTM3fQ.d-YWFIIV3ue7eUwUIemVHKrxVSgsdy3Dm34bCfkKBPE&t=2024-09-21T07%3A18%3A57.318Z"  # Update this URL
+                response = requests.get(supabase_credentials_url)
 
-                # Create the connection string
-                engine_str = f"mysql+mysqlconnector://{db_username}:{db_password}@{db_endpoint}:{db_port}/{db_name}"
+                if response.status_code == 200:
+                    try:
+                        # Parse the service account credentials
+                        service_account_info = response.json()
 
-                # Create the SQLAlchemy engine
-                engine = create_engine(engine_str)
-    
+                        # Authenticate with Google Sheets
+                        creds = service_account.Credentials.from_service_account_info(
+                            service_account_info,
+                            scopes=['https://www.googleapis.com/auth/spreadsheets']
+                        )
+                        client = gspread.authorize(creds)
 
+                        # Open the Google Sheet
+                        sheet_key = "1OfUcnLLjC3deCLvhWUYBV5jP0t4INaQ9_ToZFrRj468"  # Replace with your actual sheet key
+                        sheet = client.open_by_key(sheet_key).sheet1
 
-                # Store the DataFrame in the database table
-                table_name = 'tstt_email_collection'  # Replace with your table name
-                data_to_insert = feedback_df.values.tolist()
-                data_to_insert = pd.DataFrame(data_to_insert,columns=feedback_df.columns)
-                data_to_insert.to_sql(name=table_name, con=engine, if_exists='append', index=False)
+                        # Get existing records from the sheet
+                        existing_records = sheet.get_all_values()
 
+                        if existing_records:
+                            # Extract headers
+                            headers = existing_records[0]
 
-
-                st.success("Thank you for your response.")
+                            # Ensure the headers match the DataFrame
+                            if headers == feedback_df.columns.tolist():
+                                # Convert DataFrame to list of lists and append to the sheet
+                                feedback_records = feedback_df.values.tolist()
+                                sheet.append_rows(feedback_records, value_input_option='RAW')
+                                st.success("Thank you! Your response has been successfully recorded.")
+                            else:
+                                st.error("Sheet headers do not match the expected format.")
+                        else:
+                            st.error("No headers found in the sheet. Please ensure the sheet has headers.")
+                    except Exception as e:
+                        st.error(f"An error occurred while appending data: {e}")
+                else:
+                    st.error("Failed to fetch service account credentials. Please check your setup.")
             else:
                 st.error("The email address must contain '@gmail.com'.")
         else:
             st.error("The email addresses do not match.")
     else:
-        st.error("Please fill in both fields.")
+        st.error("Please fill in all the fields.")
 
-    
-    
+
