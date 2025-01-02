@@ -16,7 +16,10 @@ from datetime import datetime
 
 # Function to get the current timestamp
 def get_current_timestamp():
-    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")  # Format: YYYY-MM-DD HH:MM:SS
+    utc_now = datetime.utcnow()  # Get current UTC time
+    ist_now = utc_now + timedelta(hours=5, minutes=30)  # Convert to IST
+    return ist_now.strftime("%Y-%m-%d %H:%M:%S")  # Format: YYYY-MM-DD HH:MM:SS
+    
 
 
 # Display the PNG image in the top centre of the Streamlit sidebar with custom dimensions
