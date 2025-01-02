@@ -33,7 +33,7 @@ College_names = ["TSWRD Pharmacy College, Mahbubabad","TSWRDC & PGC, Budvel","TS
 "TSWRDCW Bhupalpally","TSWRDCW Jagathgirigutta","TSWRDCW Jagtial","TSWRDCW Kamareddy","TSWRDCW Karimnagar","TSWRDCW Kothagudem","TSWRDCW Mahbubnagar","TSWRDCW Mancherial","TSWRDCW Medak","TSWRDCW Nagarkurnool","TSWRDCW Nalgonda",
 "TSWRDCW Sirsilla","TSWRDCW Suryapet","TSWRDCW Vikarabad","TSWRDCW Wanaparthy","TSWRDCW Warangal east","TSWRDCW Warangal West","TTWRDC Asifabad(Women)","TTWRDC Dammapeta(women)","TTWRDC Devarakonda(women)","TTWRDC Janagaon(women)","TTWRDC Khammam(Women)"
 ,"TTWRDC Kothagudem(women)","TTWRDC Mahabubabad(women)","TTWRDC Mahabubnagar(Women)","TTWRDC Medak(Women)","TTWRDC Mulugu(Women)","TTWRDC Nizamabad(Women)","TTWRDC Shadnagar(Women)","TTWRDC Siricilla(Women)","TTWRDC Suryapeta(Women)",
-"TTWRDC Utnoor(Women)","MJBTBC Keesara","MJBTBC wargal","MJBTBC nizamabad","MJBTBC khamam","MJBTBC ghanpur"]
+"TTWRDC Utnoor(Women)","MJBTBC Keesara","MJBTBC Wargal","MJBTBC Nizamabad","MJBTBC Khamam","MJBTBC Ghanpur"]
 College=st.selectbox('Select your College Name*',College_names)
 Email_id=st.text_input("Enter your correct Email address*")
 Confirm_Email_id=st.text_input("Rewrite to confirm your correct Email Address*")
