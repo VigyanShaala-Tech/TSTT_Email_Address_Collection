@@ -13,6 +13,11 @@ import numpy as np
 from sqlalchemy import create_engine
 
 
+# Function to get the current timestamp
+def get_current_timestamp():
+    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")  # Format: YYYY-MM-DD HH:MM:SS
+
+
 # Display the PNG image in the top centre of the Streamlit sidebar with custom dimensions
 image_path = 'https://twetkfnfqdtsozephdse.supabase.co/storage/v1/object/sign/stemcheck/VS-logo.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJzdGVtY2hlY2svVlMtbG9nby5wbmciLCJpYXQiOjE3MjE5NzA3ODUsImV4cCI6MTc1MzUwNjc4NX0.purLZOGk272W80A4OlvnavqVB9u-yExhzpmI3dZrjdM&t=2024-07-26T05%3A13%3A02.704Z'
 st.markdown(
@@ -64,8 +69,9 @@ if not Name or not College:
 
 
 # Function to create feedback dataframe
-def create_feedback_dataframe(College, Name, Email_creation, Reasons, Email_id, Confirm_Email_id):
+def create_feedback_dataframe(timestamp,College, Name, Email_creation, Reasons, Email_id, Confirm_Email_id):
     data = {
+        'Timestamp': timestamp,  # Add the timestamp
         'College': College,
         'Name': Name,
         'Email_creation': Email_creation,
@@ -82,10 +88,10 @@ if st.button("Submit"):
     if Email_creation == "Yes" and Email_id and Confirm_Email_id:
         if Email_id == Confirm_Email_id:  # Check if email addresses match
             if "@gmail.com" in Email_id:  # Check for valid '@gmail.com' email
-                feedback_df = create_feedback_dataframe(College, Name, Email_creation, Reasons, Email_id, Confirm_Email_id)
+                timestamp = get_current_timestamp()
+                feedback_df = create_feedback_dataframe(timestamp, College, Name, Email_creation, Reasons, Email_id, Confirm_Email_id)
 
-    
-
+                
                 # Logic to send feedback to Google Sheets
                 supabase_credentials_url = st.secrets['SUPABASE_CREDENTIALS'] 
                 response = requests.get(supabase_credentials_url)
@@ -134,7 +140,8 @@ if st.button("Submit"):
 
     #Condition if no email ids are available.
     elif Email_creation == "No":  # Handle case where no email was created
-        feedback_df = create_feedback_dataframe(College, Name, Email_creation, Reasons, Email_id, Confirm_Email_id)
+        timestamp = get_current_timestamp()
+        feedback_df = create_feedback_dataframe(timestamp, College, Name, Email_creation, Reasons, Email_id, Confirm_Email_id)
         
         
         # Logic to send feedback to Google Sheets
