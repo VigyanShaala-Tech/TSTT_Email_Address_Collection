@@ -185,26 +185,3 @@ if st.button("Submit"):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    else:
-        st.error("Please fill in all the fields.")
-
-
