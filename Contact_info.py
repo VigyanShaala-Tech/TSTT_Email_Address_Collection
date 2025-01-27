@@ -12,11 +12,13 @@ import json
 import numpy as np
 from sqlalchemy import create_engine
 from datetime import datetime, timedelta
+from datetime import datetime, timezone
 
 
 # Function to get the current timestamp
 def get_current_timestamp():
-    utc_now = datetime.utcnow()  # Get current UTC time
+  # utc_now = datetime.utcnow()  # Get current UTC time
+    utc_now = datetime.now(timezone.utc)  # Get current UTC time as a timezone-aware object
     ist_now = utc_now + timedelta(hours=5, minutes=30)  # Convert to IST
     return ist_now.strftime("%Y-%m-%d %H:%M:%S")  # Format: YYYY-MM-DD HH:MM:SS
     
