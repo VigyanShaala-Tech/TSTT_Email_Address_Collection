@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual Environments
+venv/
+.env/
+.env.*
+.venv/
+
+# Streamlit
+!.streamlit/secrets.example.toml
+.streamlit/secrets.toml
+.streamlit/cache/
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Jupyter / Temp
+.ipynb_checkpoints/
+
+# Database / Credentials
+*.pem
+*.key
+*.crt
+*.json
+
+# Misc
+*.bak
+*.tmp
