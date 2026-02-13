@@ -14,35 +14,35 @@
 
 
 ## Folder Structure
+## Folder Structure
 
-
+```text
 TSTT_Email_Address_Collection/
-├── app.py # Main Streamlit entry point
+├── app.py                     # Main Streamlit entry point
 ├── db/
-│ ├── init.py
-│ ├── connection.py # DB engine / connection
-│ └── queries.py # Fetch college, name, subject
+│   ├── __init__.py
+│   ├── connection.py          # DB engine / connection
+│   └── queries.py             # Fetch college, name, subject
 ├── storage/
-│ ├── init.py
-│ └── store_to_database.py # Store data to PostgreSQL
+│   ├── __init__.py
+│   └── store_to_database.py   # Store data to PostgreSQL
 ├── utils/
-│ ├── init.py
-│ └── helper_functions.py # Timestamp, dataframe creation
+│   ├── __init__.py
+│   └── helper_functions.py    # Timestamp, dataframe creation
 ├── ui/
-│ ├── init.py
-│ ├── style.py # CSS & styling
-│ └── header.py # Logo + title
+│   ├── __init__.py
+│   ├── style.py               # CSS & styling
+│   └── header.py              # Logo + title
 ├── .streamlit/
-│ ├── config.toml
-│ ├── secrets.example.toml # Example file for DB config
-│ └── secrets.toml # Ignored by git
+│   ├── config.toml
+│   ├── secrets.example.toml   # Example file
+│   └── secrets.toml           # Ignored by git
 ├── requirements.txt
 ├── .gitignore
 └── README.md
-
+```
 
 ## 🚀 How to Run the Application 
-
 From your project directory, run: 
 
 *streamlit run app.py*
@@ -50,7 +50,6 @@ The app will open automatically in your browser. 
 
 
 ## 🧱 Tech Stack 
-
 | Component           | Technology |
 | --------------------| -----------|
 | Frontend UI         | Streamlit  |
@@ -61,24 +60,23 @@ The app will open automatically in your browser. 
 
 
 ## 🔐 Database Configuration 
-
 - The app reads database credentials from st.secrets. 
 - You must configure the following in your .streamlit/secrets.toml file: 
-
+```text
 DB_HOST = "your_host" 
 DB_PORT = "your_port" 
 DB_NAME = "your_database" 
 DB_USER = "your_username" 
 DB_PASSWORD = "your_password" 
- 
+```
 
 ## 🧩 Application Workflow 
-### 1 Load Dropdown Data 
+### 1. Load Dropdown Data 
 - Fetches college names from database 
 - Fetches student names from database
 - Displays the subject area associated with the student from database
     
-### 2 User Input Collection 
+### 2. User Input Collection 
 The form collects: 
 - College Name (Required) 
 - Student Name (Required) 
@@ -91,20 +89,21 @@ The form collects: 
     - Select reasons (multi-select) 
     - Optional custom reason 
     
-### 3 Validations 
+### 3. Validations 
 The app enforces: 
 - Required fields must be filled 
 - Email must contain @gmail.com 
 - Confirm email must match original email 
 - Graceful error messages on failure 
     
-### 4 Data Storage 
+### 4. Data Storage 
 On successful submission: 
 - A timestamp (converted to IST) is generated 
 - Data is structured into a Pandas DataFrame 
-- Stored in PostgreSQL table: 
-        *old.tstt_email_collection_log*  
-
+- Stored in PostgreSQL table:
+```text
+old.tstt_email_collection_log
+```
 
 ## 📊 Database Table Fields 
 - The following columns are inserted: 
