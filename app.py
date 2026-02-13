@@ -70,7 +70,6 @@ if not Name or not College:
     st.error("Please fill in all the compulsory fields marked with * before proceeding.")
     st.stop()
 
-
 if st.button("Submit"):
 
     # Basic Validation 
@@ -86,9 +85,15 @@ if st.button("Submit"):
             st.error("Please enter and confirm your email address.")
             st.stop()
 
-        if "@gmail.com" not in Email_id:
-            st.error("The email address must contain '@gmail.com'.")
+        valid_emails = ["@gmail.com", "@proton.me", "@protonmail.com"]
+
+        if not any(Email_id.lower().endswith(domain) for domain in valid_emails):
+            st.error(
+                "Please enter a valid email address "
+                "(@gmail.com, @proton.me, or @protonmail.com)."
+            )
             st.stop()
+
 
         if Email_id != Confirm_Email_id:
             st.error("The email addresses do not match.")
@@ -110,8 +115,15 @@ if st.button("Submit"):
 
         # Store data to our database
         try:
-            store_feedback_postgres(feedback_df)
-            st.success("Thank you! Your response has been successfully recorded.")
+            st.markdown("---")
+
+            st.success(
+                "🎉 **Submission Successful!**\n\n"
+            )
+
+            st.balloons()
+
+
         except Exception as e:
             st.error(f"Failed to store data: {e}")
 
@@ -132,8 +144,14 @@ if st.button("Submit"):
 
         # Store data to our database
         try:
-            store_feedback_postgres(feedback_df)
-            st.success("Thank you! Your response has been successfully recorded.")
+            st.markdown("---")
+
+            st.success(
+                "🎉 **Submission Successful!**\n\n"
+            )
+
+            st.balloons()
+
         except Exception as e:
             st.error(f"Failed to store data: {e}")
 
