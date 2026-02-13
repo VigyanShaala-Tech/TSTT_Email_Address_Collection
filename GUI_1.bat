@@ -1,1 +1,1 @@
-streamlit run Contact_info.py
+streamlit run app.py
