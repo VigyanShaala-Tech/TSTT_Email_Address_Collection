@@ -16,32 +16,25 @@
 ## Folder Structure
 
 TSTT_Email_Address_Collection/
-│
-├── app.py                      # Main Streamlit entry point
-│
+├── app.py # Main Streamlit entry point
 ├── db/
-│   ├── __init__.py
-│   ├── connection.py           # DB engine / connection
-│   └── queries.py              # Fetch college, name, subject
-│
+│ ├── init.py
+│ ├── connection.py # DB engine / connection
+│ └── queries.py # Fetch college, name, subject
 ├── storage/
-│   ├── __init__.py
-│   └── store_to_database.py              # Store data to PostgreSQL
-│
+│ ├── init.py
+│ └── store_to_database.py # Store data to PostgreSQL
 ├── utils/
-│   ├── __init__.py
-│   └── helper_functions.py              # timestamp, dataframe creation
-│
+│ ├── init.py
+│ └── helper_functions.py # Timestamp, dataframe creation
 ├── ui/
-│   ├── __init__.py
-│   ├── style.py               # CSS & styling
-│   └── header.py               # Logo + title
-│
+│ ├── init.py
+│ ├── style.py # CSS & styling
+│ └── header.py # Logo + title
 ├── .streamlit/
-│   ├── config.toml
-│   ├── secrets.example.toml    # example file for database configuration    
-│   └── secrets.toml            # ignored by git
-│
+│ ├── config.toml
+│ ├── secrets.example.toml # Example file for DB config
+│ └── secrets.toml # Ignored by git
 ├── requirements.txt
 ├── .gitignore
 └── README.md
