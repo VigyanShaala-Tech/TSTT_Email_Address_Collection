@@ -15,6 +15,7 @@
 
 ## Folder Structure
 
+
 TSTT_Email_Address_Collection/
 ├── app.py # Main Streamlit entry point
 ├── db/
