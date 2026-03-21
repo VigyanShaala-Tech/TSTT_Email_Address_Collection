@@ -115,6 +115,7 @@ if st.button("Submit"):
 
         # Store data to our database
         try:
+            store_feedback_postgres(feedback_df)
             st.markdown("---")
 
             st.success(
@@ -144,6 +145,7 @@ if st.button("Submit"):
 
         # Store data to our database
         try:
+            store_feedback_postgres(feedback_df)
             st.markdown("---")
 
             st.success(
