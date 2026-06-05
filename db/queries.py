@@ -6,7 +6,7 @@ from db.connection import get_db_engine
 @st.cache_data
 def fetch_college_names():
     query = """
-        SELECT DISTINCT  college_name FROM old.uploadstelangana_feb_10_0_gi_f_20260207052038 WHERE   college_name IS NOT NULL
+        SELECT DISTINCT  college_name FROM old.telangana_inc_10_0_gi_20260604110952 WHERE   college_name IS NOT NULL
         ORDER BY   college_name;
     """
     df = pd.read_sql(query, get_db_engine())
@@ -16,7 +16,7 @@ def fetch_college_names():
 def fetch_students_by_college(college_name):
     query = """
         SELECT DISTINCT full_name
-        FROM old.uploadstelangana_feb_10_0_gi_f_20260207052038
+        FROM old.telangana_inc_10_0_gi_20260604110952
         WHERE college_name = %(college_name)s
           AND full_name IS NOT NULL
         ORDER BY full_name
@@ -34,12 +34,12 @@ def fetch_students_by_college(college_name):
 @st.cache_data
 def fetch_subject_areas(college_name, full_name):
     query = """
-        SELECT DISTINCT subject_area
-        FROM old.uploadstelangana_feb_10_0_gi_f_20260207052038
+        SELECT DISTINCT subject_area_abbreviation
+        FROM old.telangana_inc_10_0_gi_20260604110952
         WHERE college_name = %(college_name)s
           AND full_name = %(full_name)s
-          AND subject_area IS NOT NULL
-        ORDER BY subject_area
+          AND subject_area_abbreviation IS NOT NULL
+        ORDER BY subject_area_abbreviation
     """
 
     df = pd.read_sql(
@@ -51,4 +51,4 @@ def fetch_subject_areas(college_name, full_name):
         }
     )
 
-    return df["subject_area"].tolist()
+    return df["subject_area_abbreviation"].tolist()
