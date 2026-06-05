@@ -33,18 +33,18 @@ if College and Name:
 
     if len(subject_areas) == 1:
         Subject_area = subject_areas[0]
-        st.info(f"Subject Area: **{Subject_area}**")
+        st.info(f"Department: **{Subject_area}**")
 
     elif len(subject_areas) > 1:
         Subject_area = st.selectbox(
-            "Select your subject area*",
+            "Select your Department*",
             subject_areas,
             index=None,
-            placeholder="Choose your subject area"
+            placeholder="Choose your Department"
         )
 
     else:
-        st.warning("No subject area found for this student.")
+        st.warning("No department found for this student.")
 
 
 Email_creation =st.radio('Did you create your email address?*',('Yes','No'))
