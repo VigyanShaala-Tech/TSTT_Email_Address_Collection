@@ -6,7 +6,7 @@ from db.connection import get_db_engine
 @st.cache_data
 def fetch_college_names():
     query = """
-        SELECT DISTINCT  college_name FROM old.telangana_inc_10_0_gi_20260604110952 WHERE   college_name IS NOT NULL
+        SELECT DISTINCT  college_name FROM old.incubator_13_20260924110719 WHERE   college_name IS NOT NULL
         ORDER BY   college_name;
     """
     df = pd.read_sql(query, get_db_engine())
@@ -16,7 +16,7 @@ def fetch_college_names():
 def fetch_students_by_college(college_name):
     query = """
         SELECT DISTINCT full_name
-        FROM old.telangana_inc_10_0_gi_20260604110952
+        FROM old.incubator_13_20260924110719
         WHERE college_name = %(college_name)s
           AND full_name IS NOT NULL
         ORDER BY full_name
@@ -35,7 +35,7 @@ def fetch_students_by_college(college_name):
 def fetch_subject_areas(college_name, full_name):
     query = """
         SELECT DISTINCT subject_area_abbreviation
-        FROM old.telangana_inc_10_0_gi_20260604110952
+        FROM old.incubator_13_20260924110719
         WHERE college_name = %(college_name)s
           AND full_name = %(full_name)s
           AND subject_area_abbreviation IS NOT NULL
